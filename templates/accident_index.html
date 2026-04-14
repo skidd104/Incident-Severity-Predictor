@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UK Accident Analysis AI</title>
+    <style>
+        :root { --zen-bg: #fdfdfb; --muji-gray: #333; --border-color: #e0e0e0; }
+        body { font-family: "Helvetica Neue", Arial, sans-serif; background: var(--zen-bg); color: var(--muji-gray); display: flex; justify-content: center; padding: 40px; margin: 0; }
+        .container { max-width: 900px; width: 100%; background: white; padding: 50px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid #eee; }
+        h1 { font-weight: 200; font-size: 2.5rem; margin-bottom: 5px; color: #111; }
+        p.subtitle { color: #888; margin-bottom: 40px; font-weight: 300; }
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .field { display: flex; flex-direction: column; }
+        label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; color: #999; font-weight: 600; }
+        select, input { padding: 14px; border: 1px solid var(--border-color); border-radius: 2px; background: #fff; font-size: 0.9rem; outline: none; transition: border 0.3s; }
+        select:focus, input:focus { border-color: #333; }
+        button { grid-column: span 2; padding: 18px; margin-top: 20px; background: #333; color: white; border: none; letter-spacing: 2px; font-weight: bold; cursor: pointer; transition: 0.4s; }
+        button:hover { background: #000; transform: translateY(-2px); }
+        
+        .result-card { margin-top: 40px; padding: 30px; text-align: center; border-radius: 4px; border: 1px solid transparent; }
+        .fatal { background: #fff5f5; color: #c53030; border-color: #feb2b2; }
+        .serious { background: #fffaf0; color: #dd6b20; border-color: #fbd38d; }
+        .slight { background: #f0fff4; color: #2f855a; border-color: #9ae6b4; }
+        .result-card h2 { margin: 0; font-weight: 300; font-size: 2rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>UK Accident Predictor</h1>
+        <p class="subtitle">Predicting incident severity using Random Forest Classification</p>
+
+        <form action="/predict" method="post">
+            <div class="input-grid">
+                <div class="field">
+                    <label>Region</label>
+                    <select name="region">
+                        <option value="0">London</option>
+                        <option value="1">North West England</option>
+                        <option value="2">West Midlands</option>
+                        <option value="3">Yorkshire and the Humber</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Area Type</label>
+                    <select name="area">
+                        <option value="0">Rural</option>
+                        <option value="1">Small Town</option>
+                        <option value="2">Urban</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Road Conditions</label>
+                    <select name="road">
+                        <option value="0">Dry Road</option>
+                        <option value="1">Icy</option>
+                        <option value="2">Snow</option>
+                        <option value="3">Wet Road</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Time of Day</label>
+                    <select name="time">
+                        <option value="0">Afternoon</option>
+                        <option value="1">Early Morning</option>
+                        <option value="2">Evening</option>
+                        <option value="3">Morning</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Driver Age Group</label>
+                    <select name="age">
+                        <option value="0">16-20</option>
+                        <option value="1">21-25</option>
+                        <option value="2">26-35</option>
+                        <option value="3">36-45</option>
+                        <option value="4">46-55</option>
+                        <option value="5">Over 56</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Sex of Driver</label>
+                    <select name="sex">
+                        <option value="0">Female</option>
+                        <option value="1">Male</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Vehicle Type</label>
+                    <select name="v_type">
+                        <option value="0">Bus</option>
+                        <option value="1">Car</option>
+                        <option value="2">Motorcycle</option>
+                        <option value="3">Taxi</option>
+                        <option value="4">Van</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Number of Vehicles</label>
+                    <input type="number" name="n_vehicles" min="1" max="10" value="2">
+                </div>
+                <button type="submit">ANALYZE SEVERITY RISK</button>
+            </div>
+        </form>
+
+        {% if prediction %}
+        <div class="result-card {{ status }}">
+            <h2>Outcome: {{ prediction }}</h2>
+            <p>AI Confidence: {{ confidence }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

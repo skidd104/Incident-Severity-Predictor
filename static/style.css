@@ -1,0 +1,28 @@
+.result-card {
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* Muted Red for Fatal */
+.result-card.fatal {
+    background-color: #ffe5e5;
+    border: 1px solid #ffcccc;
+    color: #a83232;
+}
+
+/* Muted Orange for Serious */
+.result-card.serious {
+    background-color: #fff4e5;
+    border: 1px solid #ffebcc;
+    color: #a87632;
+}
+
+/* Muted Green for Slight */
+.result-card.slight {
+    background-color: #f0f7f0;
+    border: 1px solid #e0eee0;
+    color: #4a7a4a;
+}
